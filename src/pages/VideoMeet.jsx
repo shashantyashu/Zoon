@@ -12,6 +12,7 @@ import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
 import ChatIcon from "@mui/icons-material/Chat";
 import server from "../environment";
+import CloseIcon from "@mui/icons-material/Close";
 
 const server_url = server;
 
@@ -510,6 +511,15 @@ export default function VideoMeetComponent() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             variant="outlined"
+            sx={{
+              input: { color: "white" }, // 👈 text white
+              label: { color: "#3b82f6" }, // 👈 label blue
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "#2563eb" }, // default border
+                "&:hover fieldset": { borderColor: "#3b82f6" }, // hover border
+                "&.Mui-focused fieldset": { borderColor: "#3b82f6" }, // focused border
+              },
+            }}
           />
           <Button variant="contained" onClick={connect}>
             Connect
@@ -521,99 +531,90 @@ export default function VideoMeetComponent() {
         </div>
       ) : (
         <div className={styles.meetVideoContainer}>
-          {/* {showModal ? <div className={styles.chatRoom}>
+          <div className={styles.meetVideoContainer}>
+            {showModal ? (
+              <div className={styles.chatRoom}>
+                <div className={styles.chatContainer}>
+                  {/* Header with Close Button */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "15px",
+                    }}
+                  >
+                    <h1 style={{ color: "#3b82f6", margin: 0 }}>Chat</h1>
 
-                        <div className={styles.chatContainer}>
-                            <h1>Chat</h1>
+                    <IconButton
+                      onClick={() => setModal(false)}
+                      sx={{ color: "white" }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
 
-                            <div className={styles.chattingDisplay}>
-
-                                {messages.length !== 0 ? messages.map((item, index) => {
-
-                                    console.log(messages)
-                                    return (
-                                        <div style={{ marginBottom: "20px" }} key={index}>
-                                            <p style={{ fontWeight: "bold" }}>{item.sender}</p>
-                                            <p>{item.data}</p>
-                                        </div>
-                                    )
-                                }) : <p>No Messages Yet</p>}
-
-
-                            </div>
-
-                            <div className={styles.chattingArea}>
-                                <TextField value={message} onChange={(e) => setMessage(e.target.value)} id="outlined-basic" label="Enter Your chat" variant="outlined" />
-                                <Button variant='contained' onClick={sendMessage}>Send</Button>
-                            </div>
-
-
-                        </div>
-                    </div> : <></>}
-                     */}
-          {showModal ? (
-            <div className={styles.chatRoom}>
-              <div className={styles.chatContainer}>
-                <h1 style={{ color: "#3b82f6", marginBottom: "15px" }}>Chat</h1>
-
-                <div className={styles.chattingDisplay}>
-                  {messages.length !== 0 ? (
-                    messages.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          style={{
-                            marginBottom: "15px",
-                            padding: "12px",
-                            background: "#1f2937",
-                            borderRadius: "12px",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                          }}
-                        >
-                          <p
+                  {/* Messages */}
+                  <div className={styles.chattingDisplay}>
+                    {messages.length !== 0 ? (
+                      messages.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
                             style={{
-                              fontWeight: "bold",
-                              color: "#3b82f6",
-                              marginBottom: "5px",
+                              marginBottom: "15px",
+                              padding: "12px",
+                              background: "#1f2937",
+                              borderRadius: "12px",
+                              boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                             }}
                           >
-                            {item.sender}
-                          </p>
-                          <p style={{ margin: 0 }}>{item.data}</p>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <p style={{ color: "#9ca3af" }}>No Messages Yet</p>
-                  )}
-                </div>
+                            <p
+                              style={{
+                                fontWeight: "bold",
+                                color: "#3b82f6",
+                                marginBottom: "5px",
+                              }}
+                            >
+                              {item.sender}
+                            </p>
+                            <p style={{ margin: 0 }}>{item.data}</p>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <p style={{ color: "#9ca3af" }}>No Messages Yet</p>
+                    )}
+                  </div>
 
-                <div
-                  className={styles.chattingArea}
-                  style={{ display: "flex", gap: "10px" }}
-                >
-                  <TextField
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    label="Enter your chat"
-                    variant="outlined"
-                    fullWidth
-                    sx={{
-                      input: { color: "white" },
-                      label: { color: "#3b82f6" },
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": { borderColor: "#2563eb" },
-                        "&:hover fieldset": { borderColor: "#3b82f6" },
-                      },
-                    }}
-                  />
-                  <Button variant="contained" onClick={sendMessage}>
-                    Send
-                  </Button>
+                  {/* Input Area */}
+                  <div
+                    className={styles.chattingArea}
+                    style={{ display: "flex", gap: "10px" }}
+                  >
+                    <TextField
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      label="Enter your chat"
+                      variant="outlined"
+                      fullWidth
+                      sx={{
+                        input: { color: "white" },
+                        label: { color: "#3b82f6" },
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": { borderColor: "#2563eb" },
+                          "&:hover fieldset": { borderColor: "#3b82f6" },
+                        },
+                      }}
+                    />
+                    <Button variant="contained" onClick={sendMessage}>
+                      Send
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
 
           <div className={styles.buttonContainers}>
             <IconButton onClick={handleVideo} style={{ color: "white" }}>
